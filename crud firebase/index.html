@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<title>firebase CRUD</title>
+	<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		.formulario{
+			width: 100%;
+			padding: 20px;
+			text-align: center;
+			z-index: 1212123;
+			position: relative;
+			background: white;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		h3{
+			margin-top: 20px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.conteudo{
+			width:100%;
+			height:460px;
+			overflow: scroll;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			
+		}
+		.tablemano{
+			display: none;
+
+		}
+		th{
+			text-align: center;
+		}
+		td{
+			width:18%;
+			text-align: center;
+		}
+		tr{
+			width:100%;
+		}
+		thead{
+			width:20%;
+		}
+		.editar{
+			display: none;
+			margin-top: 10px;
+			text-align: center;
+		}
+		.cancelar{
+			display: none;
+			margin-top: 10px;
+			text-align: center;
+		}
+		.enviar{
+			margin-top: 10px;
+			text-align: center;
+		}
+		span{
+			width:100px;
+		}
+		.load{
+			width:100%;
+			height:100%;
+			background-color:rgba(0,0,0,0.1); 
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			justify-content:center;
+		}
+		.editt{
+			width: 100%;
+			height:100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: rgba(0,0,0,0.3);
+			z-index: 1;
+			display: none;
+			overflow: hidden;
+			position: fixed;
+		}
+		.buttons{
+			width: 100%;
+			text-align: left;
+		}
+
+
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<div class="formulario">
+		<h3>Crud de usuarios</h3>
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon1">Usuario</span>
+		  </div>
+		  <input type="text" class="form-control nomeInput"  aria-label="Usuario" aria-describedby="basic-addon1">
+		</div>
+
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon1">Email</span>
+		  </div>
+		  <input type="text" class="form-control emailInput"  aria-label="Email" aria-describedby="basic-addon1">
+		</div>
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text " id="basic-addon1">Telefone</span>
+		  </div>
+		  <input type="number" min="10000000" max="999999999" class="form-control telefoneInput"  aria-label="Telefone" aria-describedby="basic-addon1">
+		</div>
+		<div class="buttons">
+			<input type="buttom" name="enviar" value="enviar" class="enviar btn btn-success btn-lg btn-block">
+			<input type="buttom" name="editar" value="editar" class="editar btn btn-primary btn-lg btn-block">
+			<input type="buttom" name="cancelar" value="cancelar" class="cancelar btn btn-danger btn-lg btn-block">
+		</div>
+		
+	</div>
+		
+
+	<div class="conteudo">
+		<div class="load">
+			<img class="loader" src="loading-icon.gif"></img>
+		</div>
+		
+		<table class="table table-dark table-striped table-bordered table-hover tablemano" >
+			<thead class="thead-dark">
+				<th>
+					nome
+				</th>
+				<th>
+					email
+				</th>
+				<th>
+					telefone
+				</th>
+				<th>
+					Editar
+				</th>
+				<th>
+					Excluir
+				</th>
+			</thead>
+			<tbody class="tabel">
+				
+			</tbody>
+		</table>
+	</div>	
+</div>
+<div class="editt">
+	
+</div>
+
+
+
+
+
+
+<script type="text/javascript" src="firebase.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
