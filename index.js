@@ -283,7 +283,7 @@ pesquisar.addEventListener('click',function(){
 
 
 pesquisaCancela.addEventListener('click',function(){
-	if(pesquisarNome.value!=''){
+
 		pesquisarNome.value = '';
 		load.style.display = 'flex';
 		carregaUsuarios().then(function(){
@@ -292,7 +292,7 @@ pesquisaCancela.addEventListener('click',function(){
 		},function(e){
 			console.log(e);
 		});
-	}	
+
 });
 
 
