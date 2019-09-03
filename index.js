@@ -13,6 +13,11 @@ let pesquisar = document.querySelector('.pesquisar');
 let pesquisarNome = document.querySelector('.pesquisarNome');
 let pesquisaCancela = document.querySelector('.pesquisaCancela');
 let key;
+let usuarioInvalido= document.querySelector('.usuarioInvalido');
+let emailInvalido= document.querySelector('.emailInvalido');
+let telefoneInvalido= document.querySelector('.telefoneInvalido');
+
+
 
 window.onload = function (){
 	carregaUsuarios().then(function(){
@@ -60,24 +65,86 @@ function carregaUsuarios(){
 
 			tabel.appendChild(novoElementoTR);
 
-		});	
+		});
 
 		table.style.display = 'none';
-		
 		setTimeout(function(){
 			load.style.display = 'none';
 		},700);
 		setTimeout(function(){
 			table.style.display = 'block';
 		},701);
-			
+
 			resolve();
 		});
-			
+
 	});
 }
 
-enviar.addEventListener('click',function(){	
+function validate(){
+
+	var truee = true;
+	if(nome.value==''){
+		usuarioInvalido.innerHTML = 'O campo de usuario não pode estar vazio';
+		usuarioInvalido.style.display = 'block';
+		truee =  false;
+	}else if(nome.value.length<5){
+		usuarioInvalido.innerHTML = 'O campo de usuario deve possuir no minimo 5 caracteres';
+		usuarioInvalido.style.display = 'block';
+		truee =  false;
+	}else{
+		usuarioInvalido.style.display = 'none';
+	}
+
+
+	var usuario = email.value.substring(0, email.value.indexOf("@"));
+	var dominio = email.value.substring(email.value.indexOf("@")+ 1, email.value.length);
+
+	if(email.value==''){
+		emailInvalido.innerHTML = 'O campo de email não pode estar vazio';
+		emailInvalido.style.display = 'block';
+		truee =  false;
+	}else if((usuario.length >=1) &&
+    (dominio.length >=3) &&
+    (usuario.search("@")==-1) &&
+    (dominio.search("@")==-1) &&
+    (usuario.search(" ")==-1) &&
+    (dominio.search(" ")==-1) &&
+    (dominio.search(".")!=-1) &&
+    (dominio.indexOf(".") >=1)&&
+    (dominio.lastIndexOf(".") < dominio.length - 1)){
+    	emailInvalido.style.display = 'none';
+	}else{
+		emailInvalido.innerHTML = 'Por favor insira um email valido';
+		emailInvalido.style.display = 'block';
+		truee =  false;
+	}
+
+	if(telefone.value==''){
+		telefoneInvalido.innerHTML = 'O campo de telefone não pode estar vazio';
+		telefoneInvalido.style.display = 'block';
+		truee =  false;
+	}else if(telefone.value.length<8||telefone.value.length>9){
+		telefoneInvalido.innerHTML = 'O campo de telefone deve ser preenchido com  8 ou 9 digitos';
+		telefoneInvalido.style.display = 'block';
+		truee =  false;
+	}else{
+		telefoneInvalido.style.display = 'none';
+	}
+
+	if (truee == false){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+enviar.addEventListener('click',function(){
+	var validade = validate();
+	if(validade==false){
+		return false;
+	}
+
 	dbRef.push({
 		nome: nome.value, 
 		email: email.value, 
