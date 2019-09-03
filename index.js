@@ -16,7 +16,7 @@ let key;
 let usuarioInvalido= document.querySelector('.usuarioInvalido');
 let emailInvalido= document.querySelector('.emailInvalido');
 let telefoneInvalido= document.querySelector('.telefoneInvalido');
-
+let aviso = document.querySelector('.h55');
 
 
 window.onload = function (){
@@ -31,51 +31,63 @@ window.onload = function (){
 
 function dados(variavel,campo,novo){
 	variavel = document.createElement('td');
-	variavel.innerHTML = campo;  
-	novo.appendChild(variavel);  
+	variavel.innerHTML = campo;
+	novo.appendChild(variavel);
 }
 
 function botoes(variavel,botao,classe1,classe2,html,dado){
-	variavel = document.createElement('td'); 
-	botao = document.createElement('buttom'); 
-	botao.classList.add('btn'); 
+	variavel = document.createElement('td');
+	botao = document.createElement('buttom');
+	botao.classList.add('btn');
 	botao.classList.add(classe1);
 	botao.classList.add(classe2);
-	botao.setAttribute("value", dado); 
-	botao.innerHTML = html; 
+	botao.setAttribute("value", dado);
+	botao.innerHTML = html;
 	variavel.appendChild(botao);
-	novoElementoTR.appendChild(variavel); 
+	novoElementoTR.appendChild(variavel);
 }
 
 function carregaUsuarios(){
 		return new Promise(function(resolve, reject){
+			aviso.style.display = 'none';
 			tabel.innerHTML = '';
 			dbRef.orderByChild('nome').on('value',function(snapshot){
+			if(snapshot.numChildren()==0){
+				table.style.display = 'none';
+				load.style.display = 'flex';
+				setTimeout(function(){
+					load.style.display = 'none';
+				},700);
+				setTimeout(function(){
+					aviso.innerHTML = 'Não existem usuarios cadastrados';
+					aviso.style.display = 'flex';
+				},701);
+			}else{
+				snapshot.forEach(function(dado){
 
-			snapshot.forEach(function(dado){
+				novoElementoTR = document.createElement('tr');
 
-			novoElementoTR = document.createElement('tr'); 
+				dados('novoNomeTD',dado.val().nome,novoElementoTR);
+				dados('novoEmailTD',dado.val().email,novoElementoTR);
+				dados('novoTelefoneTD',dado.val().telefone,novoElementoTR);
 
-			dados('novoNomeTD',dado.val().nome,novoElementoTR);
-			dados('novoEmailTD',dado.val().email,novoElementoTR);
-			dados('novoTelefoneTD',dado.val().telefone,novoElementoTR);
+				botoes('novoEditarTD','botaoEditar','btn-success','edit','editar',dado.key)
+				botoes('novoExcluirTD','botaoExcluir','btn-danger','excluir','excluir',dado.key)
 
-			botoes('novoEditarTD','botaoEditar','btn-success','edit','editar',dado.key)
-			botoes('novoExcluirTD','botaoExcluir','btn-danger','excluir','excluir',dado.key)
+				tabel.appendChild(novoElementoTR);
 
-			tabel.appendChild(novoElementoTR);
+			});
 
-		});
+			table.style.display = 'none';
+			setTimeout(function(){
+				load.style.display = 'none';
+			},700);
+			setTimeout(function(){
+				table.style.display = 'block';
+			},701);
 
-		table.style.display = 'none';
-		setTimeout(function(){
-			load.style.display = 'none';
-		},700);
-		setTimeout(function(){
-			table.style.display = 'block';
-		},701);
-
-			resolve();
+				resolve();
+				}
 		});
 
 	});
@@ -146,12 +158,12 @@ enviar.addEventListener('click',function(){
 	}
 
 	dbRef.push({
-		nome: nome.value, 
-		email: email.value, 
+		nome: nome.value,
+		email: email.value,
 		telefone: telefone.value
 	});
 
-	nome.value = ''; 
+	nome.value = '';
 	email.value =  '';
 	telefone.value = '';
 
@@ -173,7 +185,7 @@ function addListeners() {
 			editar.style.display = 'inline';
 			cancelar.style.display = 'inline';
 			enviar.style.display = 'none';
-			nome.value = elem.parentNode.parentNode.childNodes[0].innerHTML; 
+			nome.value = elem.parentNode.parentNode.childNodes[0].innerHTML;
 			email.value =  elem.parentNode.parentNode.childNodes[1].innerHTML;
 			telefone.value = elem.parentNode.parentNode.childNodes[2].innerHTML;
 			key = elem.parentNode.parentNode.childNodes[3].childNodes[0].getAttribute('value');
@@ -194,11 +206,11 @@ function addListeners() {
 					},function(e){
 						console.log(e);
 					});
-				}else{ 
+				}else{
 				  	return false;
 				}
 		});
-	});	
+	});
 }
 
 cancelar.addEventListener('click',function(){
@@ -206,7 +218,7 @@ cancelar.addEventListener('click',function(){
 	editar.style.display = 'none';
 	cancelar.style.display = 'none';
 	enviar.style.display = 'inline';
-	nome.value = ''; 
+	nome.value = '';
 	email.value =  '';
 	telefone.value = '';
 });
@@ -223,7 +235,7 @@ editar.addEventListener('click',function(){
 	editar.style.display = 'none';
 	cancelar.style.display = 'none';
 	enviar.style.display = 'inline';
-	nome.value = ''; 
+	nome.value = '';
 	email.value =  '';
 	telefone.value = '';
 	load.style.display = 'flex';
@@ -240,8 +252,7 @@ editar.addEventListener('click',function(){
 function CarregaPesquisa(snap){
 	return new Promise(function(resolve, reject){
 	tabel.innerHTML = '';
-						
-	novoElementoTR = document.createElement('tr'); 
+	novoElementoTR = document.createElement('tr');
 
 	dados('novoNomeTD',snap.val().nome,novoElementoTR);
 	dados('novoEmailTD',snap.val().email,novoElementoTR);
@@ -259,23 +270,37 @@ function CarregaPesquisa(snap){
 	},700);
 	setTimeout(function(){
 		table.style.display = 'block';
-	},701);	
-	resolve();	
+	},701);
+	resolve();
 	});
 }
 
 pesquisar.addEventListener('click',function(){
 	dbRef.orderByChild('nome').equalTo(pesquisarNome.value).on('value',function(snapshot) { //endAt(`${pesquisarNome.value}\uf8ff`)
-			snapshot.forEach(function(snap){
-				// console.log(snap.val().nome);
-				CarregaPesquisa(snap).then(function(){
-				addListeners();
+			aviso.style.display = 'none';
+			if(snapshot.numChildren()==0){
+				table.style.display = 'none';
+				load.style.display = 'flex';
+				setTimeout(function(){
+					load.style.display = 'none';
+				},700);
+				setTimeout(function(){
+					aviso.innerHTML = 'Não existem resultados';
+					aviso.style.display = 'flex';
+				},701);
 
-				},function(e){
-					console.log(e);
+
+			}else{
+				snapshot.forEach(function(snap){
+					// console.log(snap.val().nome);
+					CarregaPesquisa(snap).then(function(){
+					addListeners();
+
+					},function(e){
+						console.log(e);
+					});
 				});
-						
-			});	
+			}
 		}
 	);
 	pesquisarNome.value = '';
@@ -283,7 +308,7 @@ pesquisar.addEventListener('click',function(){
 
 
 pesquisaCancela.addEventListener('click',function(){
-
+		aviso.style.display = 'none';
 		pesquisarNome.value = '';
 		load.style.display = 'flex';
 		carregaUsuarios().then(function(){

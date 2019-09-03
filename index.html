@@ -5,128 +5,7 @@
 	<title>firebase CRUD</title>
 	<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<style type="text/css">
-		*{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			transition: all 2s;
-		}
-		.formulario{
-			width: 100%;
-			padding: 20px;
-			text-align: center;
-			z-index: 1212123;
-			position: relative;
-			background: white;
-			margin-top: 20px;
-			margin-bottom: 20px;
-		}
-		h3{
-			text-align: center;
-			margin-bottom: 10px;
-		}
-		.conteudo{
-			width:100%;
-			height:400px;
-			overflow: scroll;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			padding-left: 10px;
-			padding-right: 7px;
-			margin-top: 25px;
-			transition: all 2s;
-		}
-		.tablemano{
-			display: none;
-			margin-left: 20px;
-
-		}
-		th{
-			text-align: center;
-		}
-		td{
-			width:15%;
-			text-align: center;
-		}
-		tr{
-			width:100%;
-		}
-		thead{
-			width:20%;
-		}
-		.editar{
-			display: none;
-			margin-top: 10px;
-			text-align: center;
-			transition: all 2s;
-		}
-		.cancelar{
-			display: none;
-			margin-top: 10px;
-			text-align: center;
-			transition: all 2s;
-		}
-		.enviar{
-			margin-top: 10px;
-			text-align: center;
-			transition: all 2s;
-		}
-		span{
-			width:100px;
-		}
-		.load{
-			width:100%;
-			height:100%;
-			background-color:rgba(0,0,0,0.1); 
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			justify-content:center;
-		}
-		.editt{
-			width: 100%;
-			height:100%;
-			position: absolute;
-			top: 0;
-			left: 0;
-			background-color: rgba(0,0,0,0.3);
-			z-index: 1;
-			display: none;
-			overflow: hidden;
-			position: fixed;
-		}
-		.buttons{
-			width: 100%;
-			text-align: center;
-		}
-
-		.btn{
-			cursor: pointer;
-		}
-		.search{
-			width:100%;
-			text-align: center;
-			padding-left: 20px;
-			padding-right: 20px;
-			background-color: rgba(0,0,0,0.5);
-			height:70px;
-			display: flex;
-			align-items: center;
-			flex-direction: row;
-		}
-		.invalid{
-			margin-left: 10px;
-			color:red;
-			font-family: tahoma;
-			font-size: 20px;
-			display: none;
-		}
-		input[type='text'],input[type='email'],input[type='number']{
-			width:100%;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -160,10 +39,10 @@
 			<input type="buttom" name="editar" value="editar" class="editar btn btn-primary">
 			<input type="buttom" name="cancelar" value="cancelar" class="cancelar btn btn-danger">
 		</div>
-		
+
 	</div>
-		
-	<div class="search">	
+
+	<div class="search">
 		  <input class="form-control mr-sm-2 pesquisarNome" type="text" placeholder="Pesquise por um nome" aria-label="Search">
 		  <button class="btn btn-primary btn-rounded btn-sm my-0 pesquisar" type="submit">Pesquisa</button>
 		  <button class="btn btn-warning btn-rounded btn-sm my-0 pesquisaCancela" type="submit">Refresh</button>
@@ -173,33 +52,23 @@
 		<div class="load">
 			<img class="loader" src="loading-icon.gif"></img>
 		</div>
-		
+		<h4 class="h55"></h4>
 		<table class="table table-dark table-striped table-bordered table-hover tablemano" >
 			<thead class="thead-dark">
-				<th>
-					nome
-				</th>
-				<th>
-					email
-				</th>
-				<th>
-					telefone
-				</th>
-				<th>
-					Editar
-				</th>
-				<th>
-					Excluir
-				</th>
+				<th>nome</th>
+				<th>email</th>
+				<th>telefone</th>
+				<th>Editar</th>
+				<th>Excluir</th>
 			</thead>
 			<tbody class="tabel">
-				
+
 			</tbody>
 		</table>
-	</div>	
+	</div>
 </div>
 <div class="editt">
-	
+
 </div>
 
 
