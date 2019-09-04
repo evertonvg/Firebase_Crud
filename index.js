@@ -53,6 +53,8 @@ function carregaUsuarios(){
 			tabel.innerHTML = '';
 			dbRef.orderByChild('nome').on('value',function(snapshot){
 			if(snapshot.numChildren()==0){
+				pesquisaCancela.setAttribute('disabled',true);
+				pesquisar.setAttribute('disabled',true);
 				table.style.display = 'none';
 				load.style.display = 'flex';
 				setTimeout(function(){
@@ -63,6 +65,8 @@ function carregaUsuarios(){
 					aviso.style.display = 'flex';
 				},701);
 			}else{
+				pesquisaCancela.removeAttribute('disabled');
+				pesquisar.removeAttribute('disabled');
 				snapshot.forEach(function(dado){
 
 				novoElementoTR = document.createElement('tr');
@@ -224,6 +228,10 @@ cancelar.addEventListener('click',function(){
 });
 
 editar.addEventListener('click',function(){
+	var validade = validate();
+	if(validade==false){
+		return false;
+	}
 	var mudarDados = dbRef.child(key);
 		mudarDados.update({
 		"nome": nome.value,
